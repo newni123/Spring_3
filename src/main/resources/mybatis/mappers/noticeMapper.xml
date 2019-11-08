@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="noticeMapper">
+	<select id="noticeList" resultType="com.iu.s3.model.board.NoticeVO"> <!-- VO를 여러개 만들어서 보내줌 -->
+		select * from notice order by num desc
+	</select>
+	<select id="noticeSelect" resultType="com.iu.s3.model.board.NoticeVO" parameterType="java.util.Map"> 
+	<!-- select는 결과물을 담을 resultType 필요-->
+	<!-- 굳이 parameterType을 Map으로 안해도 됨 그냥 이런 방식도 있다 ... integer가 훨씬 편함 -->
+		select * from notice where num = #{num}
+	</select>
+	<update id="noticeUpdate" parameterType="com.iu.s3.model.board.NoticeVO">
+		update notice set title = #{title}, writer = #{writer}, contents = #{contents} where num = #{num}
+	</update>
+	<insert id="noticeWrite" parameterType="com.iu.s3.model.board.NoticeVO"> <!-- ref타입가져올거면 풀패키지명으로 적기 -->
+		insert into notice
+		values(board_seq.nextval,#{title},#{writer},#{contents},sysdate,0)
+	</insert>
+	<delete id="noticeDelete" parameterType="java.lang.Integer"> <!-- primitive도 풀패키지인듯.. -->
+		delete notice where num = #{num} 
+	</delete>
+</mapper>
