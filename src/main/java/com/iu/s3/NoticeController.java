@@ -1,7 +1,6 @@
 package com.iu.s3;
 
 import java.util.List;
-import java.util.Map;
 
 import javax.inject.Inject;
 import javax.servlet.RequestDispatcher;
@@ -12,10 +11,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.iu.s3.model.board.NoticeVO;
 import com.iu.s3.service.board.NoticeService;
+import com.iu.s3.util.Pager;
 
 @Controller
 public class NoticeController {
@@ -26,7 +25,7 @@ public class NoticeController {
 	public void noticeWrite2(NoticeVO noticeVO, HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
 		String msg = "작성 실패";
-		if (noticeService.noticeWrite(noticeVO) > 0) 
+		if (noticeService.noticeWrite(noticeVO) > 0)
 			msg = "작성 완료";
 		request.setAttribute("msg", msg);
 		request.setAttribute("path", "./noticeList");
@@ -40,9 +39,10 @@ public class NoticeController {
 	}
 
 	@RequestMapping(value = "notice/noticeUpdate", method = RequestMethod.POST)
-	public void noticeUpdate2(NoticeVO noticeVO,HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public void noticeUpdate2(NoticeVO noticeVO, HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
 		String msg = "수정 실패";
-		if (noticeService.noticeUpdate(noticeVO) > 0) 
+		if (noticeService.noticeUpdate(noticeVO) > 0)
 			msg = "수정 완료";
 		request.setAttribute("msg", msg);
 		request.setAttribute("path", "./noticeList");
@@ -56,9 +56,9 @@ public class NoticeController {
 	}
 
 	@RequestMapping("notice/noticeDelete")
-	public void noticeDelete(int num,HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public void noticeDelete(int num, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String msg = "삭제 실패";
-		if (noticeService.noticeDelete(num) > 0) 
+		if (noticeService.noticeDelete(num) > 0)
 			msg = "삭제 완료";
 		request.setAttribute("msg", msg);
 		request.setAttribute("path", "./noticeList");
@@ -73,13 +73,10 @@ public class NoticeController {
 
 	// list : /notice/noticeList GET
 	@RequestMapping("notice/noticeList")
-	public List<NoticeVO> noticeList(Model model,@RequestParam(required = false,defaultValue = "1")int curPage) throws Exception {
-		Map<String,Object> map = noticeService.noticeList(curPage);
-		List<NoticeVO> noticeVOs = (List<NoticeVO>)map.get("list");
-		int totalPage = (Integer)map.get("totalPage");
+	public void noticeList(Model model, Pager pager) throws Exception {
+		List<NoticeVO> noticeVOs = noticeService.noticeList(pager);
 		model.addAttribute("list", noticeVOs);
-		model.addAttribute("totalPage",totalPage);
-		return noticeVOs;
+		model.addAttribute("pager",pager);
 	}
 	// view : /WEB-INF/views/notice/noticeList.jsp
 

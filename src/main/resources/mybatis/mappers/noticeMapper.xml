@@ -7,7 +7,7 @@
 	<select id="noticeCount" resultType="java.lang.Integer">
 		select count(num) from notice
 	</select>
-	<select id="noticeList" resultType="com.iu.s3.model.board.NoticeVO" parameterType="java.util.Map"> <!-- VO를 여러개 만들어서 보내줌 -->
+	<select id="noticeList" resultType="com.iu.s3.model.board.NoticeVO" parameterType="java.util.Map"> 
 		select * from (select N.*, rownum R from (select * from notice order by num desc) N)
 		where R between #{startRow} and #{lastRow}
 	</select>
