@@ -12,7 +12,7 @@ import javax.servlet.ServletResponse;
  * Servlet Filter implementation class EncodingFilter
  */
 public class EncodingFilter implements Filter {
-
+	private String encode;
     /**
      * Default constructor. 
      */
@@ -33,8 +33,8 @@ public class EncodingFilter implements Filter {
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 		// TODO Auto-generated method stub
 		// place your code here
-		request.setCharacterEncoding("UTF-8");
-		response.setCharacterEncoding("UTF-8");
+		request.setCharacterEncoding(this.encode);
+		response.setCharacterEncoding(this.encode);
 		System.out.println("Filter In");
 		chain.doFilter(request, response);
 		System.out.println("Filter Out");
@@ -46,6 +46,7 @@ public class EncodingFilter implements Filter {
 	 */
 	public void init(FilterConfig fConfig) throws ServletException {
 		// TODO Auto-generated method stub
+		this.encode = fConfig.getInitParameter("encode");
 	}
 
 }

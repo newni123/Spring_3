@@ -17,12 +17,14 @@ public class NoticeDAO {
 	private SqlSession sqlSession;
 	private static final String NAMESPACE = "noticeMapper.";
 	// final이 오니까 대문자로 선언, 값은 noticeMapper에 지정한 대로 + .
-
+	public int noticeCount() throws Exception{
+		return sqlSession.selectOne(NAMESPACE + "noticeCount");
+	}
 	public int noticeUpdate(NoticeVO noticeVO) throws Exception{
 		return sqlSession.update(NAMESPACE + "noticeUpdate",noticeVO);
 	}
-	public List<NoticeVO> noticeList() throws Exception{
-		return sqlSession.selectList(NAMESPACE+"noticeList");
+	public List<NoticeVO> noticeList(Map<String, Integer> map) throws Exception{
+		return sqlSession.selectList(NAMESPACE+"noticeList",map);
 	}
 	public NoticeVO noticeSelect(int num) throws Exception {
 		Map<String, Integer> map = new HashMap<String, Integer>();

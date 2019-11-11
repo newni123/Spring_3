@@ -1,6 +1,7 @@
 package com.iu.s3;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 import javax.servlet.RequestDispatcher;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.iu.s3.model.board.NoticeVO;
 import com.iu.s3.service.board.NoticeService;
@@ -71,9 +73,12 @@ public class NoticeController {
 
 	// list : /notice/noticeList GET
 	@RequestMapping("notice/noticeList")
-	public List<NoticeVO> noticeList(Model model) throws Exception {
-		List<NoticeVO> noticeVOs = noticeService.noticeList();
+	public List<NoticeVO> noticeList(Model model,@RequestParam(required = false,defaultValue = "1")int curPage) throws Exception {
+		Map<String,Object> map = noticeService.noticeList(curPage);
+		List<NoticeVO> noticeVOs = (List<NoticeVO>)map.get("list");
+		int totalPage = (Integer)map.get("totalPage");
 		model.addAttribute("list", noticeVOs);
+		model.addAttribute("totalPage",totalPage);
 		return noticeVOs;
 	}
 	// view : /WEB-INF/views/notice/noticeList.jsp

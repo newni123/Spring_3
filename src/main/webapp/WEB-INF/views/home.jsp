@@ -8,11 +8,8 @@
 </head>
 <c:import url="./layout/boot.jsp"/>
 <body>
-<h1>
 <c:import url="./layout/nav.jsp"/>
-	Hello world!  
-</h1>
-
-<P>  The time on the server is ${serverTime}. </P>
+	<h1>Hello world!</h1>
+	<P>  The time on the server is ${serverTime}. </P>
 </body>
 </html>
