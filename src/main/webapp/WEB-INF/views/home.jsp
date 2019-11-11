@@ -6,9 +6,9 @@
 <head>
 	<title>Home</title>
 </head>
+<c:import url="./layout/boot.jsp"/>
 <body>
 <h1>
-<c:import url="./layout/boot.jsp"></c:import>
 <c:import url="./layout/nav.jsp"/>
 	Hello world!  
 </h1>
