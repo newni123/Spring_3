@@ -4,13 +4,63 @@ public class Pager {
 	private Integer curPage; // 현재 목록의 페이지 번호
 	private Integer perPage; // 한 페이지당 보여질 글 개수
 	private Integer startNum; // 현재 블럭에서 시작번호 (ex: 1,6,11..)
-	private Integer lastNum;  // 현재 블럭에서 마지막 번호(ex:5,10,15..)
+	private Integer lastNum; // 현재 블럭에서 마지막 번호(ex:5,10,15..)
 	private Integer curBlock; // 현재 블럭이 몇번째 블럭인지 (ex: 12345(1),678910(2)) 괄호안의 숫자
 	private Integer totalBlock; // 블럭의 총 개수
+	private Integer startRow;
+	private Integer lastRow;
+
+	private String kind;
+	private String search;
+
+	public Integer getStartRow() {
+		return startRow;
+	}
+
+	public void setStartRow(Integer startRow) {
+		this.startRow = startRow;
+	}
+
+	public Integer getLastRow() {
+		return lastRow;
+	}
+
+	public void setLastRow(Integer lastRow) {
+		this.lastRow = lastRow;
+	}
+
+	public String getKind() {
+		return kind;
+	}
+
+	public void setKind(String kind) {
+		this.kind = kind;
+	}
+
+	public String getSearch() {
+		if(search == null)
+			search="";
+		return search;
+	}
+
+	public void setSearch(String search) {
+		this.search = search;
+	}
 
 	public Pager() {
 		perPage = 10;
 	}
+
+	public Integer getPerPage() {
+		if (perPage == null || perPage == 0)
+			perPage = 10;
+		return perPage;
+	}
+
+	public void setPerPage(Integer perPage) {
+		this.perPage = perPage;
+	}
+
 	public Integer getTotalBlock() {
 		return totalBlock;
 	}
@@ -28,8 +78,8 @@ public class Pager {
 	}
 
 	public Integer getCurPage() {
-		if (this.curPage == null) {
-			this.curPage = 1;
+		if (curPage == null || curPage == 0) {
+			curPage = 1;
 		}
 		return curPage;
 	}
@@ -63,20 +113,17 @@ public class Pager {
 		// 5. curBlock으로 startNum, lastNum 구하기
 		startNum = (curBlock - 1) * perBlock + 1;
 		lastNum = curBlock * perBlock;
-		
-		if(curBlock == totalBlock) {
+
+		if (curBlock == totalBlock) {
 			lastNum = totalPage;
 		}
 	}
 
-	public RowMaker makeRow() {
+	public void makeRow() {
 		// rownum 계산
-		int startRow = (this.getCurPage() - 1) * perPage + 1;
-		int lastRow = this.getCurPage() * perPage;
-		RowMaker rowMaker = new RowMaker();
-		rowMaker.setStartRow(startRow);
-		rowMaker.setLastRow(lastRow);
-		return rowMaker;
+		startRow = (this.getCurPage() - 1) * perPage + 1;
+		lastRow = this.getCurPage() * perPage;
+
 	}
 
 }

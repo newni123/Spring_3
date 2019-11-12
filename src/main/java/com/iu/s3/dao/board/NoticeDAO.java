@@ -10,6 +10,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
 import com.iu.s3.model.board.NoticeVO;
+import com.iu.s3.util.Pager;
 import com.iu.s3.util.RowMaker;
 
 @Repository
@@ -18,14 +19,14 @@ public class NoticeDAO {
 	private SqlSession sqlSession;
 	private static final String NAMESPACE = "noticeMapper.";
 	// final이 오니까 대문자로 선언, 값은 noticeMapper에 지정한 대로 + .
-	public int noticeCount() throws Exception{
-		return sqlSession.selectOne(NAMESPACE + "noticeCount");
+	public int noticeCount(Pager pager) throws Exception{
+		return sqlSession.selectOne(NAMESPACE + "noticeCount",pager);
 	}
 	public int noticeUpdate(NoticeVO noticeVO) throws Exception{
 		return sqlSession.update(NAMESPACE + "noticeUpdate",noticeVO);
 	}
-	public List<NoticeVO> noticeList(RowMaker rowMaker) throws Exception{
-		return sqlSession.selectList(NAMESPACE+"noticeList",rowMaker);
+	public List<NoticeVO> noticeList(Pager pager) throws Exception{
+		return sqlSession.selectList(NAMESPACE+"noticeList",pager);
 	}
 	public NoticeVO noticeSelect(int num) throws Exception {
 		Map<String, Integer> map = new HashMap<String, Integer>();

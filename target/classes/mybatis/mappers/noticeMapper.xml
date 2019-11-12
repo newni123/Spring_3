@@ -4,11 +4,34 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="noticeMapper">
-	<select id="noticeCount" resultType="java.lang.Integer">
+	<select id="noticeCount" resultType="java.lang.Integer" parameterType="com.iu.s3.util.Pager">
 		select count(num) from notice
+		<choose>
+			<when test="kind == 'kindSubject'">
+				where title like '%'||#{search}||'%'
+			</when>
+			<when test="kind == 'kindContents'">
+				where contents like '%'||#{search}||'%'
+			</when>
+			<otherwise>
+				where writer like '%'||#{search}||'%'
+			</otherwise>
+		</choose>
 	</select>
-	<select id="noticeList" resultType="com.iu.s3.model.board.NoticeVO" parameterType="java.util.Map"> 
-		select * from (select N.*, rownum R from (select * from notice order by num desc) N)
+	<select id="noticeList" resultType="com.iu.s3.model.board.NoticeVO" parameterType="com.iu.s3.util.Pager"> 
+		select * from (select N.*, rownum R from (select * from notice 
+		<choose>
+			<when test="kind == 'kindSubject'">
+				where title like '%'||#{search}||'%'
+			</when>
+			<when test="kind == 'kindContents'">
+				where contents like '%'||#{search}||'%'
+			</when>
+			<otherwise>
+				where writer like '%'||#{search}||'%'
+			</otherwise>
+		</choose>
+		order by num desc ) N)
 		where R between #{startRow} and #{lastRow}
 	</select>
 	<select id="noticeSelect" resultType="com.iu.s3.model.board.NoticeVO" parameterType="java.util.Map"> 
