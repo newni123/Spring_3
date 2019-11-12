@@ -33,7 +33,7 @@
 				<c:forEach items="${list}" var="qnaVO">
 					<tr>
 						<td>${qnaVO.num}</td>
-						<td>${qnaVO.title}</td>
+						<td><a href="./qnaSelect?num=${qnaVO.num}">${qnaVO.title}</a></td>
 						<td>${qnaVO.writer}</td>
 						<td>${qnaVO.reg_date}</td>
 						<td>${qnaVO.hit}</td>
@@ -43,6 +43,7 @@
 		</table>
 	</div>
 	<div class="container">
+		<input type="text" name = "search">
 		<ul class="pagination">
 			<c:if test="${pager.curBlock > 1 }">
 				<li><a href="./qnaList?CurPage=${pager.startNum - 1}">이전</a></li>
@@ -50,7 +51,7 @@
 			<c:forEach begin="${pager.startNum}" end="${pager.lastNum}" var="i">
 				<li><a href="./qnaList?CurPage=${i}">${i}</a></li>
 			</c:forEach>
-			<c:if test="${pager.curBlock < pager.totalBlock }">
+			<c:if test="${pager.curBlock < pager.totalBlock}">
 				<li><a href="./qnaList?CurPage=${pager.lastNum + 1}">다음</a></li>
 			</c:if>
 		</ul>

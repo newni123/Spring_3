@@ -22,4 +22,5 @@ public class QnaDAOTest extends TestAbstractCase {
 			int result = qnaDAO.qnaInsert(qnaVO);
 		}
 	}
+	
 }
