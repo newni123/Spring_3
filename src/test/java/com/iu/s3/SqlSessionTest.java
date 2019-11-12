@@ -11,6 +11,7 @@ public class SqlSessionTest extends TestAbstractCase{
 	@Inject
 	private SqlSession sqlSession;
 	
+	
 	@Test
 	public void sqlTest() {
 		assertNotNull(sqlSession);
