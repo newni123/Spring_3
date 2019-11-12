@@ -3,18 +3,19 @@ package com.iu.s3.util;
 public class Pager {
 	private Integer curPage; // 현재 페이지 번호
 	private Integer perPage; // 불러올때 글의 개수
-
+	private String kind; // 검색 종류
+	private String search; // 검색어
 	// DB
 	private Integer startRow; // 시작rownum
 	private Integer lastRow; // 끝 rownum
-
+	
 	// View(Jsp)
 	private Integer startNum; // 시작 번호
 	private Integer lastNum; // 끌 번호
 	private Integer curBlock; 
 	// ↑ 현재 블럭 번호  |1|2|3|4|5| 다음>(1번째블럭) <이전 |6|7|8|9|10|(2번째블럭) 괄호 안에 있는거  현재 6페이지면 2번째블럭
 	private Integer totalBlock; // 전체 블럭 개수 
-
+	
 	public Pager() {
 		perPage = 10; // 한 블럭당 글이 10개씩 표기
 	}
@@ -86,24 +87,23 @@ public class Pager {
 	public void setLastRow(Integer lastRow) {
 		this.lastRow = lastRow;
 	}
-/*
-	public void makePager(int totalCount) {
-		int totalPage = totalCount / perPage;
-		if (totalCount % perPage != 0)
-			totalPage++;
-		int perBlock = 5; // 한번에 보여지는 블럭 수
-		totalBlock = totalPage / perBlock; // 전체 블럭의 수
-		if (totalPage % perBlock != 0)
-			totalBlock++;
-		curBlock = curPage / perBlock; // 현재 몇번째 블럭인지
-		if (curPage % perBlock != 0)
-			curBlock++;
-		startNum = (curBlock - 1) * perBlock + 1;
-		lastNum = curBlock * perBlock;
-		if (curBlock == totalBlock) // 현재 마지막 블럭일 경우
-			lastNum = totalPage; // 블럭의 마지막 숫자는 총 페이지의 수
+	public String getKind() {
+		return kind;
 	}
-*/
+
+	public void setKind(String kind) {
+		this.kind = kind;
+	}
+
+	public String getSearch() {
+		if(search == null) // null값이면 기본페이지도 안뜨기 때문에 null이 아닌 빈문자열로 default값 설정
+			search = "";
+		return search;
+	}
+	
+	public void setSearch(String search) {
+		this.search = search;
+	}
 	public void makeRow() {
 		startRow = (this.getCurPage() - 1) * this.getPerPage() + 1; // 그냥 멤버변수로 호출하면 Null값이 들어 갈수도 있으니까 꼭 메서드 형식으로
 		lastRow = this.getCurPage() * this.getPerPage();
