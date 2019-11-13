@@ -3,6 +3,9 @@ package com.iu.s3;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,16 +22,48 @@ import com.iu.s3.util.Pager;
 public class QnaController {
 	@Inject
 	private QnaService qnaService;
+
+	@RequestMapping(value = "qnaDelete")
+	public void qnaDelete(int num,HttpServletRequest request,HttpServletResponse response) throws Exception{
+		String msg = "삭제 실패";
+		if (qnaService.qnaDelete(num) > 0)
+			msg = "삭제 완료";
+		request.setAttribute("msg", msg);
+		request.setAttribute("path", "./qnaList");
+		RequestDispatcher view = request.getRequestDispatcher("/WEB-INF/views/common/common_result.jsp");
+		view.forward(request, response);
+	}
+	
+	@RequestMapping(value="qnaSelect")
+	public QnaVO qnaSelect(int num) throws Exception{
+		return qnaService.qnaSelect(num);
+	}
+	@RequestMapping(value="qnaWrite", method = RequestMethod.POST)
+	public void qnaWrite2(QnaVO qnaVO,HttpServletRequest request,HttpServletResponse response) throws Exception{
+		String msg = "작성 실패";
+		if (qnaService.qnaWrite(qnaVO) > 0)
+			msg = "작성 완료";
+		request.setAttribute("msg", msg);
+		request.setAttribute("path", "./qnaList");
+		RequestDispatcher view = request.getRequestDispatcher("/WEB-INF/views/common/common_result.jsp");
+		view.forward(request, response);
+	}
+	
+	@RequestMapping(value = "qnaWrite", method = RequestMethod.GET)
+	public void qnaWrite() throws Exception {
+	}
+
 	@RequestMapping(value = "qnaList", method = RequestMethod.GET)
-	public ModelAndView qnaList(/*Model model,*/Pager pager) throws Exception{
+	public ModelAndView qnaList(/* Model model, */Pager pager) throws Exception {
 		List<QnaVO> qnaVOs = qnaService.qnaList(pager);
 		ModelAndView mv = new ModelAndView();
-		/*model.addAttribute("list",qnaVOs);
-		model.addAttribute("pager",pager);*/
-		mv.addObject("list",qnaVOs);
-		mv.addObject("pager",pager);
+		/*
+		 * model.addAttribute("list",qnaVOs); model.addAttribute("pager",pager);
+		 */
+		mv.addObject("list", qnaVOs);
+		mv.addObject("pager", pager);
 		mv.setViewName("qna/qnaList");
 		return mv;
 	}
-	
+
 }
