@@ -8,8 +8,8 @@
 <title>Insert title here</title>
 </head>
 <c:import url="../layout/boot.jsp"/>
-<link href=<c:url value="../css/layout.css"/> rel="stylesheet">
-<link href=<c:url value="../css/reset.css"/> rel="stylesheet">
+<link href="../css/reset.css" rel="stylesheet"/>
+<link href="../css/layout.css" rel="stylesheet"/>
 <body>
 <c:import url="../layout/nav.jsp"/>
 	<section>
@@ -33,7 +33,9 @@
 			</tr>
 			<tr>
 				<td colspan="5"><a href="./qnaUpdate?num=${qnaVO.num}"
-					style="float: right; margin-right: 20px;">Update</a> <a href="./qnaDelete?num=${qnaVO.num}"
+					style="float: right; margin-right: 20px;">Update</a>
+					<a href="./qnaReply?num=${qnaVO.num}"
+					style="float: right; margin-right: 20px;">Reply</a> <a href="./qnaDelete?num=${qnaVO.num}"
 					id="del" style="float: left; margin-left: 20px;">Delete</a></td>
 			</tr>
 		</table>

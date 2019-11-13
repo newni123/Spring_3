@@ -23,8 +23,26 @@ public class QnaController {
 	@Inject
 	private QnaService qnaService;
 
+	@RequestMapping(value = "qnaReply", method = RequestMethod.POST)
+	public void qnaReply(QnaVO qnaVO,HttpServletRequest request, HttpServletResponse response) throws Exception {
+		int result = qnaService.qnaReply(qnaVO);
+		String msg = "답글 작성 실패";
+		if (result > 0)
+			msg = "답글 작성 완료";
+		request.setAttribute("msg", msg);
+		request.setAttribute("path", "./qnaList");
+		RequestDispatcher view = request.getRequestDispatcher("/WEB-INF/views/common/common_result.jsp");
+		view.forward(request, response);
+		
+	}
+
+	@RequestMapping(value = "qnaReply", method = RequestMethod.GET)
+	public void qndReply(int num, Model model) throws Exception {
+		model.addAttribute("num", num);
+	}
+
 	@RequestMapping(value = "qnaDelete")
-	public void qnaDelete(int num,HttpServletRequest request,HttpServletResponse response) throws Exception{
+	public void qnaDelete(int num, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String msg = "삭제 실패";
 		if (qnaService.qnaDelete(num) > 0)
 			msg = "삭제 완료";
@@ -33,13 +51,14 @@ public class QnaController {
 		RequestDispatcher view = request.getRequestDispatcher("/WEB-INF/views/common/common_result.jsp");
 		view.forward(request, response);
 	}
-	
-	@RequestMapping(value="qnaSelect")
-	public QnaVO qnaSelect(int num) throws Exception{
+
+	@RequestMapping(value = "qnaSelect")
+	public QnaVO qnaSelect(int num) throws Exception {
 		return qnaService.qnaSelect(num);
 	}
-	@RequestMapping(value="qnaWrite", method = RequestMethod.POST)
-	public void qnaWrite2(QnaVO qnaVO,HttpServletRequest request,HttpServletResponse response) throws Exception{
+
+	@RequestMapping(value = "qnaWrite", method = RequestMethod.POST)
+	public void qnaWrite2(QnaVO qnaVO, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String msg = "작성 실패";
 		if (qnaService.qnaWrite(qnaVO) > 0)
 			msg = "작성 완료";
@@ -48,7 +67,7 @@ public class QnaController {
 		RequestDispatcher view = request.getRequestDispatcher("/WEB-INF/views/common/common_result.jsp");
 		view.forward(request, response);
 	}
-	
+
 	@RequestMapping(value = "qnaWrite", method = RequestMethod.GET)
 	public void qnaWrite() throws Exception {
 	}

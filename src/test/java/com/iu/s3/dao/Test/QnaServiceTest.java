@@ -18,7 +18,7 @@ public class QnaServiceTest extends TestAbstractCase {
 	@Inject
 	private QnaService qnaService;
 	
-	@Test
+	//@Test
 	public void qnaListtest() throws Exception {
 		Pager pager = new Pager(); // 만들고 아무것도 넣지 않으면 null 이기 때문에 default로 넣은 curPage = 1,perPage = 10이 나와야함
 		pager.makePage(50); // 글이 50개 있다고 가정할때
@@ -28,6 +28,15 @@ public class QnaServiceTest extends TestAbstractCase {
 		assertEquals(1,(int)pager.getLastRow());
 		assertEquals(1,(int)pager.getStartNum());
 		assertEquals(5,(int)pager.getLastNum());
+	}
+	//@Test
+	public void qnaReplyUpdate(QnaVO qnaVO) throws Exception{
+		qnaVO.setTitle("t1");
+		qnaVO.setWriter("w1");
+		qnaVO.setContents("c1");
+		
+		assertEquals(1, qnaService.qnaReply(qnaVO));
+		
 	}
 
 }

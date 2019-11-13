@@ -5,11 +5,11 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Insert title here22</title>
 </head>
 <c:import url="../layout/boot.jsp"/>
-<link href=<c:url value="../css/layout.css"/> rel="stylesheet">
-<link href=<c:url value="../css/reset.css"/> rel="stylesheet">
+<link href="../css/layout.css" rel="stylesheet"/>
+<link href="../css/reset.css" rel="stylesheet"/>
 <body>
 <c:import url="../layout/nav.jsp"/>
 	<section>

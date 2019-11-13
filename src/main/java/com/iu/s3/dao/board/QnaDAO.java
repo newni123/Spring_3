@@ -16,6 +16,13 @@ public class QnaDAO {
 	private SqlSession sqlSession;
 	private static final String NAMESPACE = "qnaMapper.";
 	
+	public int qnaReplyUpdate(QnaVO qnaVO) throws Exception{
+		return sqlSession.update(NAMESPACE+"qnaReplyUpdate",qnaVO);
+	}
+	public int qnaReply(QnaVO qnaVO) throws Exception{
+		return sqlSession.insert(NAMESPACE+"qnaReply",qnaVO);
+	}
+	
 	public List<QnaVO> qnaList(Pager pager) throws Exception{
 		return sqlSession.selectList(NAMESPACE+"qnaList",pager);
 	}

@@ -5,10 +5,10 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
+<c:import url="../layout/boot.jsp" />
 </head>
 <body>
-	<c:import url="../layout/nav.jsp" />
-	<c:import url="../layout/boot.jsp" />
+<c:import url="../layout/nav.jsp" />
 	<div class="container">
 		<h2>Striped Rows</h2>
 		<p>The .table-striped class adds zebra-stripes to a table:</p>
@@ -37,7 +37,8 @@
 				<c:forEach items="${list}" var="qnaVO">
 					<tr>
 						<td>${qnaVO.num}</td>
-						<td><a href="./qnaSelect?num=${qnaVO.num}">${qnaVO.title}</a></td>
+						<td><c:forEach begin="1" end="${qnaVO.depth}">-- </c:forEach><a
+							href="./qnaSelect?num=${qnaVO.num}">${qnaVO.title}</a></td>
 						<td>${qnaVO.writer}</td>
 						<td>${qnaVO.reg_date}</td>
 						<td>${qnaVO.hit}</td>

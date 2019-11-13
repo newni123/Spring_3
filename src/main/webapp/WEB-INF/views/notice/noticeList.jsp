@@ -6,6 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+
 <c:import url="../layout/boot.jsp" />
 </head>
 <c:import url="../layout/nav.jsp" />

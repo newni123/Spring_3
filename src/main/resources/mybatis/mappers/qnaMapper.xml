@@ -4,6 +4,14 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="qnaMapper">
+
+	<update id="qnaReplyUpdate" parameterType="com.iu.s3.model.board.QnaVO">
+		update qna set step = step + 1 where ref = #{ref} and step > #{step}
+	</update>
+	<insert id="qnaReply" parameterType="com.iu.s3.model.board.QnaVO">
+		insert into qna values(
+		board_seq.nextval,#{title},#{writer},#{contents},sysdate,0,#{ref},#{step},#{depth})
+	</insert>
 	<delete id="qnaDelete"  parameterType="java.lang.Integer">
 		delete qna where num = #{num}
 	</delete>
@@ -45,7 +53,7 @@
 				where writer like '%'||#{search}||'%'
 			</otherwise>
 		</choose>
-		order by num desc) N)
+		order by ref desc,step asc) N)
 		where R between #{startRow} and #{lastRow}
 	</select>
 </mapper>
